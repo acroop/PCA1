@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Scheduling System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0077cc;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #0077cc;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    .result {
+      background: #eef9ff;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid #b3e0ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Appointment Scheduling System</h1>
+  </header>
+
+  <main>
+    <h2>Book an Appointment</h2>
+    <form id="appointmentForm">
+      <label for="patientName">Patient Name</label>
+      <input type="text" id="patientName" required>
+
+      <label for="doctor">Choose Doctor</label>
+      <select id="doctor" required>
+        <option value="">--Select--</option>
+        <option value="Dr. Smith">Dr. Smith</option>
+        <option value="Dr. Johnson">Dr. Johnson</option>
+        <option value="Dr. Brown">Dr. Brown</option>
+      </select>
+
+      <label for="date">Select Date</label>
+      <input type="date" id="date" required>
+
+      <label for="time">Select Time</label>
+      <input type="time" id="time" required>
+
+      <button type="submit">Confirm Appointment</button>
+    </form>
+
+    <div id="output" class="result" style="display:none;"></div>
+  </main>
+
+  <script>
+    document.getElementById("appointmentForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let name = document.getElementById("patientName").value;
+      let doctor = document.getElementById("doctor").value;
+      let date = document.getElementById("date").value;
+      let time = document.getElementById("time").value;
+
+      let output = document.getElementById("output");
+      output.style.display = "block";
+      output.innerHTML = `
+        <h3>Appointment Confirmed ✅</h3>
+        <p><strong>Patient:</strong> ${name}</p>
+        <p><strong>Doctor:</strong> ${doctor}</p>
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Time:</strong> ${time}</p>
+        <p><strong>Status:</strong> Confirmed</p>
+      `;
+
+      // Clear form
+      document.getElementById("appointmentForm").reset();
+    });
+  </script>
+</body>
+</html>
