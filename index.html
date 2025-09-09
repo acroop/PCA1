@@ -55,6 +55,10 @@
       padding: 1rem;
       border-radius: 5px;
       border: 1px solid #b3e0ff;
+      margin-top: 1rem;
+    }
+    .error {
+      color: red;
     }
   </style>
 </head>
@@ -93,13 +97,37 @@
     document.getElementById("appointmentForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      let name = document.getElementById("patientName").value;
+      let name = document.getElementById("patientName").value.trim();
       let doctor = document.getElementById("doctor").value;
       let date = document.getElementById("date").value;
       let time = document.getElementById("time").value;
-
       let output = document.getElementById("output");
+
+      // Validation
+      if (name === "") {
+        return showError("Patient name is required");
+      }
+      if (!/^[a-zA-Z\s]+$/.test(name)) {
+        return showError("Enter a valid name");
+      }
+      if (doctor === "") {
+        return showError("Please select a doctor");
+      }
+      if (date === "") {
+        return showError("Please select a date");
+      }
+      let today = new Date().toISOString().split("T")[0];
+      if (date < today) {
+        return showError("Date cannot be in the past");
+      }
+      if (time === "") {
+        return showError("Please select a time");
+      }
+
+      // Success message
       output.style.display = "block";
+      output.classList.remove("error");
+      output.style.color = "black";
       output.innerHTML = `
         <h3>Appointment Confirmed ✅</h3>
         <p><strong>Patient:</strong> ${name}</p>
@@ -111,6 +139,12 @@
 
       // Clear form
       document.getElementById("appointmentForm").reset();
+
+      function showError(msg) {
+        output.style.display = "block";
+        output.classList.add("error");
+        output.innerHTML = `<p><strong>Error:</strong> ${msg}</p>`;
+      }
     });
   </script>
 </body>
