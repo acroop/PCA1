@@ -4,148 +4,223 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Appointment Scheduling System</title>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #0077cc;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-    }
-    main {
-      max-width: 600px;
-      margin: 2rem auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #0077cc;
-      margin-bottom: 1rem;
-    }
-    label {
-      display: block;
-      margin: 0.5rem 0 0.2rem;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 0.6rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      background: #0077cc;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #005fa3;
-    }
-    .result {
-      background: #eef9ff;
-      padding: 1rem;
-      border-radius: 5px;
-      border: 1px solid #b3e0ff;
-      margin-top: 1rem;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f6fb;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    background: #0077cc;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 1.8rem;
+  }
+
+  main {
+    max-width: 750px;              /* ⬅ bigger card */
+    margin: 3rem auto;
+    background: white;
+    padding: 3rem;                 /* ⬅ more inner space */
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  }
+
+  h2 {
+    color: #0077cc;
+    margin-bottom: 2rem;
+    font-size: 1.6rem;             /* ⬅ bigger heading */
+  }
+
+  label {
+    display: block;
+    margin: 1rem 0 0.4rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 0.9rem;               /* ⬅ taller inputs */
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+
+  input:disabled,
+  select:disabled {
+    background: #eee;
+    cursor: not-allowed;
+  }
+
+  button {
+    width: 100%;
+    padding: 1rem;                 /* ⬅ big CTA button */
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+
+  button:hover:not(:disabled) {
+    background: #005fa3;
+  }
+
+  .result {
+    background: #eef9ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #b3e0ff;
+    margin-top: 2rem;
+    font-size: 1.05rem;
+  }
+
+  .error {
+    color: red;
+  }
+</style>
+
 </head>
+
 <body>
-  <header>
-    <h1>Appointment Scheduling System</h1>
-  </header>
 
-  <main>
-    <h2>Book an Appointment</h2>
-    <form id="appointmentForm">
-      <label for="patientName">Patient Name</label>
-      <input type="text" id="patientName" required>
+<header>
+  <h1>Appointment Scheduling System</h1>
+</header>
 
-      <label for="doctor">Choose Doctor</label>
-      <select id="doctor" required>
-        <option value="">--Select--</option>
-        <option value="Dr. Smith">Dr. Smith</option>
-        <option value="Dr. Johnson">Dr. Johnson</option>
-        <option value="Dr. Brown">Dr. Brown</option>
-      </select>
+<main>
+  <h2>Book an Appointment</h2>
 
-      <label for="date">Select Date</label>
-      <input type="date" id="date" required>
+  <form id="appointmentForm">
 
-      <label for="time">Select Time</label>
-      <input type="time" id="time" required>
+    <label for="patientName">Patient Name</label>
+    <input type="text" id="patientName" required>
 
-      <button type="submit">Confirm Appointment</button>
-    </form>
+    <label for="doctor">Choose Doctor</label>
+    <select id="doctor" disabled required>
+      <option value="">--Select--</option>
+      <option value="Dr. Smith">Dr. Smith</option>
+      <option value="Dr. Johnson">Dr. Johnson</option>
+      <option value="Dr. Brown">Dr. Brown</option>
+    </select>
 
-    <div id="output" class="result" style="display:none;"></div>
-  </main>
+    <label for="date">Select Date</label>
+    <input type="date" id="date" disabled required>
 
-  <script>
-    document.getElementById("appointmentForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+    <label for="time">Select Time</label>
+    <input type="time" id="time" disabled required>
 
-      let name = document.getElementById("patientName").value.trim();
-      let doctor = document.getElementById("doctor").value;
-      let date = document.getElementById("date").value;
-      let time = document.getElementById("time").value;
-      let output = document.getElementById("output");
+    <button type="submit" disabled>Confirm Appointment</button>
+  </form>
 
-      // Validation
-      if (name === "") {
-        return showError("Patient name is required");
+  <div id="output" class="result" style="display:none;"></div>
+</main>
+
+<script>
+  const form = document.getElementById("appointmentForm");
+  const nameInput = document.getElementById("patientName");
+  const doctorSelect = document.getElementById("doctor");
+  const dateInput = document.getElementById("date");
+  const timeInput = document.getElementById("time");
+  const submitBtn = document.querySelector("button");
+  const output = document.getElementById("output");
+
+  // Step 1: Name validation
+  nameInput.addEventListener("input", () => {
+    if (/^[a-zA-Z\s]+$/.test(nameInput.value.trim())) {
+      doctorSelect.disabled = false;
+    } else {
+      doctorSelect.disabled = true;
+      dateInput.disabled = true;
+      timeInput.disabled = true;
+      submitBtn.disabled = true;
+    }
+  });
+
+  // Step 2: Doctor selection
+  doctorSelect.addEventListener("change", () => {
+    if (doctorSelect.value !== "") {
+      dateInput.disabled = false;
+    } else {
+      dateInput.disabled = true;
+      timeInput.disabled = true;
+      submitBtn.disabled = true;
+    }
+  });
+
+  // Step 3: Date validation
+  dateInput.addEventListener("change", () => {
+    const today = new Date().toISOString().split("T")[0];
+
+    if (dateInput.value < today) {
+      alert("Date cannot be in the past");
+      dateInput.value = "";
+      timeInput.disabled = true;
+      submitBtn.disabled = true;
+    } else {
+      timeInput.disabled = false;
+    }
+  });
+
+  // Step 4: Time validation (🔥 FIXED BUG HERE)
+  timeInput.addEventListener("change", () => {
+    const selectedDate = dateInput.value;
+    const selectedTime = timeInput.value;
+
+    const now = new Date();
+    const today = now.toISOString().split("T")[0];
+
+    if (selectedDate === today) {
+      const [hh, mm] = selectedTime.split(":");
+      const selectedDateTime = new Date();
+      selectedDateTime.setHours(hh, mm, 0, 0);
+
+      if (selectedDateTime <= now) {
+        alert("You cannot book a past time for today");
+        timeInput.value = "";
+        submitBtn.disabled = true;
+        return;
       }
-      if (!/^[a-zA-Z\s]+$/.test(name)) {
-        return showError("Enter a valid name");
-      }
-      if (doctor === "") {
-        return showError("Please select a doctor");
-      }
-      if (date === "") {
-        return showError("Please select a date");
-      }
-      let today = new Date().toISOString().split("T")[0];
-      if (date < today) {
-        return showError("Date cannot be in the past");
-      }
-      if (time === "") {
-        return showError("Please select a time");
-      }
+    }
 
-      // Success message
-      output.style.display = "block";
-      output.classList.remove("error");
-      output.style.color = "black";
-      output.innerHTML = `
-        <h3>Appointment Confirmed ✅</h3>
-        <p><strong>Patient:</strong> ${name}</p>
-        <p><strong>Doctor:</strong> ${doctor}</p>
-        <p><strong>Date:</strong> ${date}</p>
-        <p><strong>Time:</strong> ${time}</p>
-        <p><strong>Status:</strong> Confirmed</p>
-      `;
+    submitBtn.disabled = false;
+  });
 
-      // Clear form
-      document.getElementById("appointmentForm").reset();
+  // Final submission
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-      function showError(msg) {
-        output.style.display = "block";
-        output.classList.add("error");
-        output.innerHTML = `<p><strong>Error:</strong> ${msg}</p>`;
-      }
-    });
-  </script>
+    output.style.display = "block";
+    output.innerHTML = `
+      <h3>Appointment Confirmed ✅</h3>
+      <p><strong>Patient:</strong> ${nameInput.value}</p>
+      <p><strong>Doctor:</strong> ${doctorSelect.value}</p>
+      <p><strong>Date:</strong> ${dateInput.value}</p>
+      <p><strong>Time:</strong> ${timeInput.value}</p>
+      <p><strong>Status:</strong> Confirmed</p>
+    `;
+
+    form.reset();
+    doctorSelect.disabled = true;
+    dateInput.disabled = true;
+    timeInput.disabled = true;
+    submitBtn.disabled = true;
+  });
+</script>
+
 </body>
 </html>
